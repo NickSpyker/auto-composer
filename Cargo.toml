@@ -19,6 +19,7 @@ authors = ["Nicolas Spijkerman <nicospijke@gmail.com>"]
 categories = ["multimedia::audio", "multimedia::encoding", "command-line-utilities"]
 documentation = "https://github.com/NickSpyker/auto-composer/blob/main/docs/documentation.md"
 edition = "2024"
+exclude = ["/data/"]
 homepage = "https://github.com/NickSpyker/auto-composer/blob/main/README.md"
 keywords = ["music", "midi", "cli"]
 license = "MIT OR Apache-2.0"
@@ -28,6 +29,7 @@ repository = "https://github.com/NickSpyker/auto-composer"
 description = "Procedural MIDI composition from existing scores"
 
 [dependencies]
+clap = { version = "4.5.53", features = ["derive"] }
 
 [dev-dependencies]
 criterion = { version = "0.8.1", features = ["default"] }

@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Run" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
     <option name="buildProfileId" value="dev" />
-    <option name="command" value="run --package auto-composer --bin compose" />
+    <option name="command" value="run --package auto-composer --bin compose -- --file data/Prelude1.mid --run" />
     <option name="workingDirectory" value="file://$PROJECT_DIR$" />
     <envs />
     <option name="emulateTerminal" value="true" />
@@ -10,7 +10,7 @@
     <option name="allFeatures" value="true" />
     <option name="withSudo" value="false" />
     <option name="buildTarget" value="REMOTE" />
-    <option name="backtrace" value="SHORT" />
+    <option name="backtrace" value="FULL" />
     <option name="isRedirectInput" value="false" />
     <option name="redirectInputPath" value="" />
     <method v="2">

@@ -14,26 +14,28 @@
  * limitations under the License.
  */
 
-mod app;
-mod args;
-mod error;
-mod input;
-mod output;
-mod result;
+use std::{
+    error,
+    fmt::{self, Debug, Display, Formatter},
+};
 
-use app::AutoComposer;
-use args::Args;
-use error::Error;
-use input::Input;
-use output::Output;
-use result::Result;
+#[non_exhaustive]
+pub enum Error {}
 
-fn main() -> Result<()> {
-    let args = Args::parse();
+impl Debug for Error {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        write!(f, "Error")
+    }
+}
 
-    let input = Input::build(&args)?;
+impl Display for Error {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        write!(f, "Error")
+    }
+}
 
-    let output = AutoComposer::run(input)?;
-
-    output.process(args)
+impl error::Error for Error {
+    fn source(&self) -> Option<&(dyn error::Error + 'static)> {
+        None
+    }
 }

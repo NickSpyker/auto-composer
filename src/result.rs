@@ -14,26 +14,7 @@
  * limitations under the License.
  */
 
-mod app;
-mod args;
-mod error;
-mod input;
-mod output;
-mod result;
+use crate::Error;
+use std::result;
 
-use app::AutoComposer;
-use args::Args;
-use error::Error;
-use input::Input;
-use output::Output;
-use result::Result;
-
-fn main() -> Result<()> {
-    let args = Args::parse();
-
-    let input = Input::build(&args)?;
-
-    let output = AutoComposer::run(input)?;
-
-    output.process(args)
-}
+pub type Result<T> = result::Result<T, Error>;

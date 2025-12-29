@@ -14,26 +14,27 @@
  * limitations under the License.
  */
 
-mod app;
-mod args;
-mod error;
-mod input;
-mod output;
-mod result;
+use clap::Parser;
+use std::path::PathBuf;
 
-use app::AutoComposer;
-use args::Args;
-use error::Error;
-use input::Input;
-use output::Output;
-use result::Result;
+#[derive(Parser)]
+#[command(version, about)]
+pub struct Args {
+    /// MIDI file to analyze
+    #[arg(short, long)]
+    pub file: PathBuf,
 
-fn main() -> Result<()> {
-    let args = Args::parse();
+    /// Output file path
+    #[arg(short, long)]
+    pub output: Option<PathBuf>,
 
-    let input = Input::build(&args)?;
+    /// Run the generated file
+    #[arg(short, long)]
+    pub run: bool,
+}
 
-    let output = AutoComposer::run(input)?;
-
-    output.process(args)
+impl Args {
+    pub fn parse() -> Self {
+        <Self as Parser>::parse()
+    }
 }

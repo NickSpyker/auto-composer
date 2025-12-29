@@ -14,26 +14,12 @@
  * limitations under the License.
  */
 
-mod app;
-mod args;
-mod error;
-mod input;
-mod output;
-mod result;
+use crate::{Input, Output, Result};
 
-use app::AutoComposer;
-use args::Args;
-use error::Error;
-use input::Input;
-use output::Output;
-use result::Result;
+pub struct AutoComposer;
 
-fn main() -> Result<()> {
-    let args = Args::parse();
-
-    let input = Input::build(&args)?;
-
-    let output = AutoComposer::run(input)?;
-
-    output.process(args)
+impl AutoComposer {
+    pub fn run(input: Input) -> Result<Output> {
+        Ok(Output {})
+    }
 }
