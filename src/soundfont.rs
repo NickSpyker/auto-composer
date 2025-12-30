@@ -14,26 +14,31 @@
  * limitations under the License.
  */
 
-use crate::{Args, Error, Result};
-use midly::Smf;
+use crate::{Error, Result};
 use std::{fs, path::PathBuf};
 
-#[derive(Debug)]
-pub struct Input {
-    pub smf: Smf<'static>,
-    pub output_file: Option<PathBuf>,
-    pub run: bool,
+static SOUNDFONT_PIANO: &[u8] = include_bytes!("../assets/sound_font/piano.sf2");
+
+#[derive(Debug, Default)]
+pub enum SoundFont {
+    #[default]
+    Piano,
+    FromFile(/* TODO */),
 }
 
-impl Input {
-    pub fn build(args: Args) -> Result<Self> {
-        let bytes = fs::read(args.file).map_err(Error::ReadInputFile)?;
-        let smf = Smf::parse(&bytes).map_err(Error::ParseInputFile)?;
+impl SoundFont {
+    pub fn new_from_file(file: PathBuf) -> Result<Self> {
+        let bytes = fs::read(file).map_err(Error::ReadSoundFontFile)?;
 
-        Ok(Self {
-            smf: smf.make_static(),
-            output_file: args.output,
-            run: args.run,
-        })
+        // TODO: parse bytes into soundfont format
+
+        Ok(Self::FromFile(/* TODO */))
+    }
+
+    pub fn get_bytes(&self) -> &[u8] {
+        match &self {
+            Self::Piano => SOUNDFONT_PIANO,
+            Self::FromFile(/* TODO */) => &[0],
+        }
     }
 }

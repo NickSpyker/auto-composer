@@ -14,29 +14,19 @@
  * limitations under the License.
  */
 
-mod app;
-mod args;
-mod error;
-mod input;
-mod output;
-mod player;
-mod result;
-mod soundfont;
+use crate::{Result, SoundFont};
+use midly::Smf;
 
-use app::AutoComposer;
-use args::Args;
-use error::Error;
-use input::Input;
-use output::Output;
-use result::Result;
-use soundfont::SoundFont;
+pub struct Player {/* TODO */}
 
-fn main() -> Result<()> {
-    let args = Args::parse();
+impl Player {
+    pub fn new(smf: Smf, sound_font: SoundFont) -> Result<Self> {
+        // TODO: Setup music player with midi track and soundfont
+        Ok(Self { /* TODO */ })
+    }
 
-    let input = Input::build(args)?;
-
-    let output = AutoComposer::run(input)?;
-
-    output.process()
+    pub fn run(&self) -> Result<()> {
+        // TODO: run music
+        Ok(())
+    }
 }

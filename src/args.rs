@@ -31,10 +31,28 @@ pub struct Args {
     /// Run the generated file
     #[arg(short, long)]
     pub run: bool,
+
+    /// List all available sound
+    #[arg(short, long)]
+    pub list: bool,
+
+    /// Use this sound when run the generated file
+    #[arg(short, long, default_value = "piano")]
+    pub sound: String,
+
+    /// Use custom sound font file when run the generated file
+    #[arg(short, long)]
+    pub custom: Option<PathBuf>,
 }
 
 impl Args {
     pub fn parse() -> Self {
-        <Self as Parser>::parse()
+        let mut args = <Self as Parser>::parse();
+
+        if args.output.is_none() {
+            args.run = true;
+        }
+
+        args
     }
 }
