@@ -28,6 +28,7 @@ use args::{Cli, Commands, Generate};
 use error::Error;
 use input::Input;
 use output::Output;
+use player::Player;
 use result::Result;
 use soundfont::SoundFont;
 
@@ -43,11 +44,25 @@ fn main() -> Result<()> {
             Ok(())
         }
         Commands::Generate(args) => {
-            let input = Input::build(args)?;
+            let input = Input::build(&args)?;
 
-            let output = AutoComposer::run(input)?;
+            let output = AutoComposer::run(&input)?;
 
-            output.process()
+            output.process()?;
+
+            if args.run {
+                let soundfont = if let Some(file) = args.custom_sound {
+                    SoundFont::new_from_file(file)?
+                } else {
+                    SoundFont::new_from_name(&args.sound)?
+                };
+
+                let player = Player::new(input.smf, soundfont)?;
+
+                player.run()?;
+            }
+
+            Ok(())
         }
     }
 }

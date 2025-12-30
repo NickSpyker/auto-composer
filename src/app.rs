@@ -20,7 +20,7 @@ use crate::{Input, Output, Result};
 pub struct AutoComposer;
 
 impl AutoComposer {
-    pub fn run(input: Input) -> Result<Output> {
+    pub fn run(input: &Input) -> Result<Output> {
         Ok(Output {})
     }
 }

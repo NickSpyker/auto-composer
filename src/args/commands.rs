@@ -22,6 +22,6 @@ pub enum Commands {
     /// Display all available built-in soundfonts
     List,
 
-    /// TODO: add description
+    /// Analyze a MIDI file and generate a new procedural composition
     Generate(Generate),
 }

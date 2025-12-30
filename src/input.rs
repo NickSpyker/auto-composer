@@ -26,13 +26,13 @@ pub struct Input {
 }
 
 impl Input {
-    pub fn build(args: Generate) -> Result<Self> {
-        let bytes = fs::read(args.file).map_err(Error::ReadInputFile)?;
+    pub fn build(args: &Generate) -> Result<Self> {
+        let bytes = fs::read(&args.file).map_err(Error::ReadInputFile)?;
         let smf = Smf::parse(&bytes).map_err(Error::ParseInputFile)?;
 
         Ok(Self {
             smf: smf.make_static(),
-            output_file: args.output,
+            output_file: args.output.clone(),
             run: args.run,
         })
     }
