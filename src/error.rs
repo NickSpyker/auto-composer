@@ -25,6 +25,7 @@ use std::{
 pub enum Error {
     ReadInputFile(io::Error),
     ParseInputFile(midly::Error),
+    InvalidSoundFontName(String),
     ReadSoundFontFile(io::Error),
     ParseSoundFontFile(soundfont::Error),
 }
@@ -34,8 +35,9 @@ impl Display for Error {
         match self {
             Self::ReadInputFile(err) => write!(f, "Failed to read input file: {err}"),
             Self::ParseInputFile(err) => write!(f, "Failed to parse MIDI file: {err}"),
-            Self::ReadSoundFontFile(err) => write!(f, "Failed to read sound font file: {err}"),
-            Self::ParseSoundFontFile(err) => write!(f, "Failed to parse sound font file: {err}"),
+            Self::InvalidSoundFontName(err) => write!(f, "Invalid built-in soundfont name: {err}"),
+            Self::ReadSoundFontFile(err) => write!(f, "Failed to read soundfont file: {err}"),
+            Self::ParseSoundFontFile(err) => write!(f, "Failed to parse soundfont file: {err}"),
         }
     }
 }
@@ -45,6 +47,7 @@ impl error::Error for Error {
         match self {
             Self::ReadInputFile(err) => Some(err),
             Self::ParseInputFile(err) => Some(err),
+            Self::InvalidSoundFontName(_) => None,
             Self::ReadSoundFontFile(err) => Some(err),
             Self::ParseSoundFontFile(err) => Some(err),
         }

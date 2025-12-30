@@ -14,26 +14,10 @@
  * limitations under the License.
  */
 
-use crate::{Error, Generate, Result};
-use midly::Smf;
-use std::{fs, path::PathBuf};
+mod cli;
+mod commands;
+mod generate;
 
-#[derive(Debug)]
-pub struct Input {
-    pub smf: Smf<'static>,
-    pub output_file: Option<PathBuf>,
-    pub run: bool,
-}
-
-impl Input {
-    pub fn build(args: Generate) -> Result<Self> {
-        let bytes = fs::read(args.file).map_err(Error::ReadInputFile)?;
-        let smf = Smf::parse(&bytes).map_err(Error::ParseInputFile)?;
-
-        Ok(Self {
-            smf: smf.make_static(),
-            output_file: args.output,
-            run: args.run,
-        })
-    }
-}
+pub use cli::Cli;
+pub use commands::Commands;
+pub use generate::Generate;

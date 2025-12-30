@@ -24,7 +24,7 @@ mod result;
 mod soundfont;
 
 use app::AutoComposer;
-use args::Args;
+use args::{Cli, Commands, Generate};
 use error::Error;
 use input::Input;
 use output::Output;
@@ -32,11 +32,22 @@ use result::Result;
 use soundfont::SoundFont;
 
 fn main() -> Result<()> {
-    let args = Args::parse();
+    match Cli::parse() {
+        Commands::List => {
+            println!("Available built-in soundfonts:");
 
-    let input = Input::build(args)?;
+            SoundFont::list()
+                .into_iter()
+                .for_each(|sound| println!("  - {sound}"));
 
-    let output = AutoComposer::run(input)?;
+            Ok(())
+        }
+        Commands::Generate(args) => {
+            let input = Input::build(args)?;
 
-    output.process()
+            let output = AutoComposer::run(input)?;
+
+            output.process()
+        }
+    }
 }

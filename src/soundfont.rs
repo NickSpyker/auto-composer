@@ -28,6 +28,13 @@ pub enum SoundFont {
 }
 
 impl SoundFont {
+    pub fn new_from_name(name: &str) -> Result<SoundFont> {
+        match name {
+            "default" | "piano" => Ok(SoundFont::Piano),
+            invalid => Err(Error::InvalidSoundFontName(invalid.to_string())),
+        }
+    }
+
     pub fn new_from_file(file: PathBuf) -> Result<Self> {
         let bytes = fs::read(file).map_err(Error::ReadSoundFontFile)?;
 
@@ -42,5 +49,9 @@ impl SoundFont {
             Self::Piano => SOUNDFONT_PIANO,
             Self::FromFile(bytes) => bytes,
         }
+    }
+
+    pub fn list() -> Vec<String> {
+        vec![String::from("piano")]
     }
 }

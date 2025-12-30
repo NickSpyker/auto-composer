@@ -14,26 +14,14 @@
  * limitations under the License.
  */
 
-use crate::{Error, Generate, Result};
-use midly::Smf;
-use std::{fs, path::PathBuf};
+use super::Generate;
+use clap::Subcommand;
 
-#[derive(Debug)]
-pub struct Input {
-    pub smf: Smf<'static>,
-    pub output_file: Option<PathBuf>,
-    pub run: bool,
-}
+#[derive(Subcommand, Debug, Clone)]
+pub enum Commands {
+    /// Display all available built-in soundfonts
+    List,
 
-impl Input {
-    pub fn build(args: Generate) -> Result<Self> {
-        let bytes = fs::read(args.file).map_err(Error::ReadInputFile)?;
-        let smf = Smf::parse(&bytes).map_err(Error::ParseInputFile)?;
-
-        Ok(Self {
-            smf: smf.make_static(),
-            output_file: args.output,
-            run: args.run,
-        })
-    }
+    /// TODO: add description
+    Generate(Generate),
 }

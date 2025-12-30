@@ -14,26 +14,24 @@
  * limitations under the License.
  */
 
-use crate::{Error, Generate, Result};
-use midly::Smf;
-use std::{fs, path::PathBuf};
+use super::Commands;
+use clap::Parser;
 
-#[derive(Debug)]
-pub struct Input {
-    pub smf: Smf<'static>,
-    pub output_file: Option<PathBuf>,
-    pub run: bool,
+#[derive(Parser, Debug)]
+#[command(version, about)]
+pub struct Cli {
+    #[command(subcommand)]
+    pub command: Commands,
 }
 
-impl Input {
-    pub fn build(args: Generate) -> Result<Self> {
-        let bytes = fs::read(args.file).map_err(Error::ReadInputFile)?;
-        let smf = Smf::parse(&bytes).map_err(Error::ParseInputFile)?;
+impl Cli {
+    pub fn parse() -> Commands {
+        let mut args = <Self as Parser>::parse();
 
-        Ok(Self {
-            smf: smf.make_static(),
-            output_file: args.output,
-            run: args.run,
-        })
+        if let Commands::Generate(opt) = &mut args.command {
+            opt.resolve();
+        }
+
+        args.command
     }
 }

@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-use clap::Parser;
+use clap::Args;
 use std::path::PathBuf;
 
-#[derive(Parser, Debug)]
-#[command(version, about)]
-pub struct Args {
+#[derive(Args, Debug, Clone)]
+pub struct Generate {
     /// Path to the input MIDI file to analyze and compose from
     #[arg(short, long, value_name = "FILE")]
     pub file: PathBuf,
@@ -32,10 +31,6 @@ pub struct Args {
     #[arg(short, long)]
     pub run: bool,
 
-    /// Display all available built-in soundfonts
-    #[arg(short, long)]
-    pub list: bool,
-
     /// Built-in soundfont to use for playback
     #[arg(short, long, value_name = "NAME", default_value = "piano")]
     pub sound: String,
@@ -45,14 +40,10 @@ pub struct Args {
     pub custom_sound: Option<PathBuf>,
 }
 
-impl Args {
-    pub fn parse() -> Self {
-        let mut args = <Self as Parser>::parse();
-
-        if args.output.is_none() {
-            args.run = true;
+impl Generate {
+    pub fn resolve(&mut self) {
+        if self.custom_sound.is_some() {
+            self.run = true;
         }
-
-        args
     }
 }
