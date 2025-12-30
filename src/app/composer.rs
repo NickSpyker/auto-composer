@@ -21,6 +21,12 @@ pub struct AutoComposer;
 
 impl AutoComposer {
     pub fn run(input: &Input) -> Result<Output> {
-        Ok(Output {})
+        let output = Output {
+            smf: input.smf.clone(),
+            output_file: input.output_file.clone(),
+            run_with_sound: input.run_with_sound.clone(),
+        };
+
+        Ok(output)
     }
 }

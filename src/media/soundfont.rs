@@ -20,7 +20,7 @@ use std::{fs, io::Cursor, path::PathBuf};
 
 static SOUNDFONT_PIANO: &[u8] = include_bytes!("../../assets/soundfont/piano.sf2");
 
-#[derive(Debug, Default)]
+#[derive(Debug, Default, Clone)]
 pub enum SoundFont {
     #[default]
     Piano,
@@ -35,7 +35,7 @@ impl SoundFont {
         }
     }
 
-    pub fn new_from_file(file: PathBuf) -> Result<Self> {
+    pub fn new_from_file(file: &PathBuf) -> Result<Self> {
         let bytes = fs::read(file).map_err(Error::ReadSoundFontFile)?;
 
         let mut cursor = Cursor::new(&bytes);

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-use crate::{Error, Generate, Result};
+use crate::{Error, Generate, Result, SoundFont};
 use midly::Smf;
 use std::{fs, path::PathBuf};
 
@@ -22,7 +22,7 @@ use std::{fs, path::PathBuf};
 pub struct Input {
     pub smf: Smf<'static>,
     pub output_file: Option<PathBuf>,
-    pub run: bool,
+    pub run_with_sound: Option<SoundFont>,
 }
 
 impl Input {
@@ -30,10 +30,18 @@ impl Input {
         let bytes = fs::read(&args.file).map_err(Error::ReadInputFile)?;
         let smf = Smf::parse(&bytes).map_err(Error::ParseInputFile)?;
 
+        let soundfont = if let Some(file) = &args.custom_sound {
+            Some(SoundFont::new_from_file(file)?)
+        } else if args.run {
+            Some(SoundFont::new_from_name(&args.sound)?)
+        } else {
+            None
+        };
+
         Ok(Self {
             smf: smf.make_static(),
             output_file: args.output.clone(),
-            run: args.run,
+            run_with_sound: soundfont,
         })
     }
 }

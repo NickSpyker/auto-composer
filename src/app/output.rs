@@ -14,13 +14,24 @@
  * limitations under the License.
  */
 
-use crate::Result;
+use crate::{Player, Result, SoundFont};
+use midly::Smf;
+use std::path::PathBuf;
 
 #[derive(Debug)]
-pub struct Output {}
+pub struct Output {
+    pub smf: Smf<'static>,
+    pub output_file: Option<PathBuf>,
+    pub run_with_sound: Option<SoundFont>,
+}
 
 impl Output {
     pub fn process(self) -> Result<()> {
+        if let Some(soundfont) = self.run_with_sound {
+            let player = Player::new(self.smf, soundfont)?;
+            player.run()?;
+        }
+
         Ok(())
     }
 }
