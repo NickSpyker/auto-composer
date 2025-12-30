@@ -49,7 +49,7 @@ impl Player {
             Error::AudioPlayback(format!("Failed to get default output config: {err}"))
         })?;
 
-        let sample_rate = config.sample_rate().0;
+        let sample_rate = config.sample_rate();
 
         let mut cursor = Cursor::new(self.soundfont.get_bytes());
         let soundfont = Arc::new(
