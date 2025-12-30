@@ -18,7 +18,7 @@ use crate::{Error, Result};
 use soundfont::SoundFont2;
 use std::{fs, io::Cursor, path::PathBuf};
 
-static SOUNDFONT_PIANO: &[u8] = include_bytes!("../assets/soundfont/piano.sf2");
+static SOUNDFONT_PIANO: &[u8] = include_bytes!("../../assets/soundfont/piano.sf2");
 
 #[derive(Debug, Default)]
 pub enum SoundFont {

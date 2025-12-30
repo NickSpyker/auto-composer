@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-use crate::Error;
+use super::Error;
 use std::result;
 
 pub type Result<T> = result::Result<T, Error>;

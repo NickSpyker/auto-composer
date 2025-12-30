@@ -16,21 +16,13 @@
 
 mod app;
 mod args;
-mod error;
-mod input;
-mod output;
-mod player;
-mod result;
-mod soundfont;
+mod core;
+mod media;
 
-use app::AutoComposer;
+use app::{AutoComposer, Input, Output};
 use args::{Cli, Commands, Generate};
-use error::Error;
-use input::Input;
-use output::Output;
-use player::Player;
-use result::Result;
-use soundfont::SoundFont;
+use core::{Error, Result};
+use media::{Player, SoundFont};
 
 fn main() -> Result<()> {
     match Cli::parse() {
