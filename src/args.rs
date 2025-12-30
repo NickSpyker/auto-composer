@@ -20,29 +20,29 @@ use std::path::PathBuf;
 #[derive(Parser, Debug)]
 #[command(version, about)]
 pub struct Args {
-    /// MIDI file to analyze
-    #[arg(short, long)]
+    /// Path to the input MIDI file to analyze and compose from
+    #[arg(short, long, value_name = "FILE")]
     pub file: PathBuf,
 
-    /// Output file path
-    #[arg(short, long)]
+    /// Path where the generated MIDI file will be saved
+    #[arg(short, long, value_name = "FILE")]
     pub output: Option<PathBuf>,
 
-    /// Run the generated file
+    /// Play the generated composition immediately after creation
     #[arg(short, long)]
     pub run: bool,
 
-    /// List all available sound
+    /// Display all available built-in soundfonts
     #[arg(short, long)]
     pub list: bool,
 
-    /// Use this sound when run the generated file
-    #[arg(short, long, default_value = "piano")]
+    /// Built-in soundfont to use for playback
+    #[arg(short, long, value_name = "NAME", default_value = "piano")]
     pub sound: String,
 
-    /// Use custom sound font file when run the generated file
-    #[arg(short, long)]
-    pub custom: Option<PathBuf>,
+    /// Path to a custom SF2 soundfont file for playback
+    #[arg(short, long, value_name = "FILE")]
+    pub custom_sound: Option<PathBuf>,
 }
 
 impl Args {

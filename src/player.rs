@@ -20,7 +20,7 @@ use midly::Smf;
 pub struct Player {/* TODO */}
 
 impl Player {
-    pub fn new(smf: Smf, sound_font: SoundFont) -> Result<Self> {
+    pub fn new(smf: Smf, soundfont: SoundFont) -> Result<Self> {
         // TODO: Setup music player with midi track and soundfont
         Ok(Self { /* TODO */ })
     }

@@ -15,30 +15,32 @@
  */
 
 use crate::{Error, Result};
-use std::{fs, path::PathBuf};
+use soundfont::SoundFont2;
+use std::{fs, io::Cursor, path::PathBuf};
 
-static SOUNDFONT_PIANO: &[u8] = include_bytes!("../assets/sound_font/piano.sf2");
+static SOUNDFONT_PIANO: &[u8] = include_bytes!("../assets/soundfont/piano.sf2");
 
 #[derive(Debug, Default)]
 pub enum SoundFont {
     #[default]
     Piano,
-    FromFile(/* TODO */),
+    FromFile(Vec<u8>),
 }
 
 impl SoundFont {
     pub fn new_from_file(file: PathBuf) -> Result<Self> {
         let bytes = fs::read(file).map_err(Error::ReadSoundFontFile)?;
 
-        // TODO: parse bytes into soundfont format
+        let mut cursor = Cursor::new(&bytes);
+        SoundFont2::load(&mut cursor).map_err(Error::ParseSoundFontFile)?;
 
-        Ok(Self::FromFile(/* TODO */))
+        Ok(Self::FromFile(bytes))
     }
 
     pub fn get_bytes(&self) -> &[u8] {
         match &self {
             Self::Piano => SOUNDFONT_PIANO,
-            Self::FromFile(/* TODO */) => &[0],
+            Self::FromFile(bytes) => bytes,
         }
     }
 }
