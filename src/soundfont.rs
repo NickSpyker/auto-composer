@@ -31,7 +31,7 @@ impl SoundFont {
     pub fn new_from_name(name: &str) -> Result<SoundFont> {
         match name {
             "default" | "piano" => Ok(SoundFont::Piano),
-            invalid => Err(Error::InvalidSoundFontName(invalid.to_string())),
+            invalid => Err(Error::BuiltInSound(invalid.to_string())),
         }
     }
 
