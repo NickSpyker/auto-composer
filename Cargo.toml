@@ -30,6 +30,7 @@ description = "Procedural MIDI composition from existing scores"
 
 [dependencies]
 clap = { version = "4.5.53", features = ["derive"] }
+midly = { version = "0.5.3", features = ["default"] }
 
 [dev-dependencies]
 criterion = { version = "0.8.1", features = ["default"] }

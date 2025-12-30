@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-use crate::{Args, Result};
+use crate::Result;
 
+#[derive(Debug)]
 pub struct Output {}
 
 impl Output {
-    pub fn process(self, args: Args) -> Result<()> {
+    pub fn process(self) -> Result<()> {
         Ok(())
     }
 }

@@ -14,12 +14,26 @@
  * limitations under the License.
  */
 
-use crate::{Args, Result};
+use crate::{Args, Error, Result};
+use midly::Smf;
+use std::{fs, path::PathBuf};
 
-pub struct Input {}
+#[derive(Debug)]
+pub struct Input {
+    pub smf: Smf<'static>,
+    pub output_file: Option<PathBuf>,
+    pub run: bool,
+}
 
 impl Input {
-    pub fn build(args: &Args) -> Result<Self> {
-        Ok(Self {})
+    pub fn build(args: Args) -> Result<Self> {
+        let bytes = fs::read(&args.file).map_err(Error::ReadInputFile)?;
+        let smf = Smf::parse(&bytes).map_err(Error::ParseInputFile)?;
+
+        Ok(Self {
+            smf: smf.make_static(),
+            output_file: args.output,
+            run: args.run,
+        })
     }
 }

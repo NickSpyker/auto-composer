@@ -16,26 +16,31 @@
 
 use std::{
     error,
-    fmt::{self, Debug, Display, Formatter},
+    fmt::{self, Display, Formatter},
+    io,
 };
 
+#[derive(Debug)]
 #[non_exhaustive]
-pub enum Error {}
-
-impl Debug for Error {
-    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        write!(f, "Error")
-    }
+pub enum Error {
+    ReadInputFile(io::Error),
+    ParseInputFile(midly::Error),
 }
 
 impl Display for Error {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        write!(f, "Error")
+        match self {
+            Self::ReadInputFile(err) => write!(f, "Failed to read input file: {err}"),
+            Self::ParseInputFile(err) => write!(f, "Failed to parse MIDI file: {err}"),
+        }
     }
 }
 
 impl error::Error for Error {
     fn source(&self) -> Option<&(dyn error::Error + 'static)> {
-        None
+        match self {
+            Self::ReadInputFile(err) => Some(err),
+            Self::ParseInputFile(err) => Some(err),
+        }
     }
 }

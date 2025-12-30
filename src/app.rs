@@ -16,6 +16,7 @@
 
 use crate::{Input, Output, Result};
 
+#[derive(Debug)]
 pub struct AutoComposer;
 
 impl AutoComposer {

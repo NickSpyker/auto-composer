@@ -31,9 +31,9 @@ use result::Result;
 fn main() -> Result<()> {
     let args = Args::parse();
 
-    let input = Input::build(&args)?;
+    let input = Input::build(args)?;
 
     let output = AutoComposer::run(input)?;
 
-    output.process(args)
+    output.process()
 }
